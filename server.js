@@ -1,3 +1,4 @@
+'use strict';
 //Server Initializers
 const express = require('express');
 const cors = require('cors');
