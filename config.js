@@ -5,7 +5,7 @@ module.exports = {
   JWT_EXPIRY: process.env.JWT_EXPIRY || '7d',
   PORT: process.env.PORT || 8080,
   CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
-  DB_URI: process.env.DB_URI || 'postgresql://dev:@localhost/PlantGuru',
+  DB_URI: process.env.DB_URI || 'postgresql://dev:@localhost/plantguru',
   TEST_DB_URI:
-    process.env.TEST_DB_URI || 'postgresql://dev:@localhost/PlantGuru-test'
+    process.env.TEST_DB_URI || 'postgresql://dev:@localhost/plantguru-test'
 };
