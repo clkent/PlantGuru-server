@@ -23,7 +23,14 @@ router.post('/', (req, res, next) => {
       return Customer.hashPassword(password);
     })
     .then(hash => {
-      return Customer.query().insert({ email, password: hash, name });
+      return Customer.query().insert({
+        email,
+        password: hash,
+        name,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        subscribed: false
+      });
     })
     .then(customer => {
       return res.status(201).json(customer.serialize());

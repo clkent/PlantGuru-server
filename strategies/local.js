@@ -15,11 +15,12 @@ function customerLocalAuth(req, res, next) {
     .where({ email })
     .then(customers => {
       customer = customers[0];
-      if (!customer.length) {
-        const err = new Error('Email is not valid');
-        err.status = 401;
-        return Promise.reject(err);
-      }
+      //TODO: some other if - customer.length doesn't work because it's an obj
+      // if (!customer.length) {
+      //   const err = new Error('Email is not valid');
+      //   err.status = 401;
+      //   return Promise.reject(err);
+      // }
       return customer.validatePassword(password);
     })
     .then(isValid => {

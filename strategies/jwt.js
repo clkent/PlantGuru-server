@@ -27,7 +27,7 @@ function customerJwtAuth(req, res, next) {
       return next(err);
     }
 
-    req.user = payload.user;
+    req.customer = payload.customer;
     return next();
   });
 }
