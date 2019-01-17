@@ -3,11 +3,16 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const { dbConnect, dbGet } = require('./db');
+const pg = require('pg');
+const { dbConnect } = require('./db');
+
+//Routers
+const customersRouter = require('./routes/customers');
+const loginRouter = require('./routes/auth');
+const plantsRouter = require('./routes/plants');
+
 //Config Vars
 const { DB_URI, PORT, CLIENT_ORIGIN } = require('./config');
-//Routers
-const plantsRouter = require('./routes/plants');
 
 const app = express();
 
@@ -15,7 +20,9 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 
-//Routes Middleware
+//Routers middleware
+app.use('/api/customers', customersRouter);
+app.use('/auth', loginRouter);
 app.use('/api/plants', plantsRouter);
 
 app.get('/', (req, res, next) => {

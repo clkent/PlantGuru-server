@@ -1,4 +1,5 @@
-// Update with your config settings.
+'use strict';
+
 const { DB_URI, TEST_DB_URI } = require('./config');
 
 module.exports = {
