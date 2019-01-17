@@ -6,15 +6,13 @@ const morgan = require('morgan');
 const pg = require('pg');
 const { dbConnect } = require('./db');
 
-//Config Vars
-const { DB_URI } = require('./config');
-const { PORT } = require('./config');
-
 //Routers
 const customersRouter = require('./routes/customers');
 const loginRouter = require('./routes/auth');
+const plantsRouter = require('./routes/plants');
 
-const client = new pg.Client(DB_URI);
+//Config Vars
+const { DB_URI, PORT, CLIENT_ORIGIN } = require('./config');
 
 const app = express();
 
@@ -25,6 +23,7 @@ app.use(express.json());
 //Routers middleware
 app.use('/api/customers', customersRouter);
 app.use('/auth', loginRouter);
+app.use('/api/plants', plantsRouter);
 
 app.get('/', (req, res, next) => {
   console.log('Here, line 16');

@@ -1,4 +1,5 @@
 'use strict';
+
 const { DB_URI } = require('./config');
 const config = require('./knexfile.js');
 const env = 'development';
