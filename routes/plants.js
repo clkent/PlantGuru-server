@@ -4,7 +4,7 @@ const { DB_URI } = require('../config');
 const config = require('../knexfile.js');
 const env = 'development';
 const knex = require('../knex');
-const Plants = require('../models/plant-model');
+const Plants = require('../models/plant');
 
 router.post('/', async (req, res, next) => {
   try {
@@ -23,8 +23,9 @@ router.post('/', async (req, res, next) => {
         Saturday: false,
         Sunday: false
       }),
-      createdAt: `${new Date().toUTCString()}`,
-      updatedAt: `${new Date().toUTCString()}`
+      created_at: `${new Date().toUTCString()}`,
+      updated_at: `${new Date().toUTCString()}`,
+      customer_id: 7
     });
     console.log(test);
   } catch (err) {
