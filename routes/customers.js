@@ -27,8 +27,8 @@ router.post('/', (req, res, next) => {
         email,
         password: hash,
         name,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        created_at: new Date(),
+        updated_at: new Date(),
         subscribed: false
       });
     })
@@ -49,8 +49,8 @@ router.get('/:id', (req, res, next) => {
       const item = results[0];
 
       const customer = {
-        customerId: item.id,
-        guruId: item.guruId,
+        customer_id: item.id,
+        guru_id: item.guru_id,
         plants: item.plants
       };
 
@@ -86,7 +86,7 @@ router.put('/:id', (req, res, next) => {
     guruId = req.body.guruId;
 
     return Customer.query()
-      .update({ guruId: guruId })
+      .update({ guru_id: guruId })
       .where({ id: customerId })
       .returning('*')
       .first()
