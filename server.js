@@ -3,12 +3,11 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const pg = require('pg');
+const { dbConnect, dbGet } = require('./db');
 //Config Vars
-const { DB_URI } = require('./config');
-const { PORT } = require('./config');
-
-const client = new pg.Client(DB_URI);
+const { DB_URI, PORT, CLIENT_ORIGIN } = require('./config');
+//Routers
+const plantsRouter = require('./routes/plants');
 
 const app = express();
 
@@ -16,7 +15,8 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 
-//Routers
+//Routes Middleware
+app.use('/api/plants', plantsRouter);
 
 app.get('/', (req, res, next) => {
   console.log('Here, line 16');
@@ -43,19 +43,8 @@ app.use((err, req, res, next) => {
 (function runServer() {
   app
     .listen(PORT, () => {
-      console.info(`App listening on port ${PORT}`);
-      client.connect(function(err) {
-        if (err) {
-          return console.error('could not connect to postgres', err);
-        }
-        client.query('SELECT NOW() AS "theTime"', function(err, result) {
-          if (err) {
-            return console.error('error running query', err);
-          }
-          console.info(result.rows[0].theTime, 'POSTGRES CONNECTED');
-          //output: Tue Jan 15 2013 19:12:47 GMT-600 (CST)
-        });
-      });
+      dbConnect();
+      console.log(`listening on port ${PORT}`);
     })
     .on('error', err => {
       console.error('Express failed to start');
