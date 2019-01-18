@@ -3,26 +3,26 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET, JWT_EXPIRY } = require('../config');
 const router = express.Router();
-const customerLocalAuth = require('../strategies/local');
-const customerJwtAuth = require('../strategies/jwt');
+const { customerLocalAuth } = require('../strategies/local');
+const jwtAuth = require('../strategies/jwt');
 
 router.use(express.json());
 
-function createAuthToken(customer) {
-  return jwt.sign({ customer }, JWT_SECRET, {
-    subject: customer.email,
+function createAuthToken(user) {
+  return jwt.sign({ user }, JWT_SECRET, {
+    subject: user.email,
     expiresIn: JWT_EXPIRY
   });
 }
 
 router.post('/login', customerLocalAuth, (req, res) => {
-  const customerAuthToken = createAuthToken(req.customer);
-  res.json({ ...req.customer, customerAuthToken });
+  const customerAuthToken = createAuthToken(req.user);
+  res.json({ ...req.user, customerAuthToken });
 });
 
-router.post('/refresh', customerJwtAuth, (req, res) => {
-  const customerAuthToken = createAuthToken(req.customer);
-  res.json({ ...req.customer, customerAuthToken });
+router.post('/refresh', jwtAuth, (req, res) => {
+  const customerAuthToken = createAuthToken(req.user);
+  res.json({ ...req.user, customerAuthToken });
 });
 
 module.exports = router;
