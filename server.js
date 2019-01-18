@@ -8,6 +8,7 @@ const { dbConnect } = require('./db');
 
 //Routers
 const customersRouter = require('./routes/customers');
+const gurusRouter = require('./routes/gurus');
 const loginRouter = require('./routes/auth');
 const plantsRouter = require('./routes/plants');
 
@@ -22,6 +23,7 @@ app.use(express.json());
 
 //Routers middleware
 app.use('/api/customers', customersRouter);
+app.use('/api/gurus', gurusRouter);
 app.use('/auth', loginRouter);
 app.use('/api/plants', plantsRouter);
 

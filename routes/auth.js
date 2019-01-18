@@ -3,7 +3,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET, JWT_EXPIRY } = require('../config');
 const router = express.Router();
-const { customerLocalAuth } = require('../strategies/local');
+const { customerLocalAuth, guruLocalAuth } = require('../strategies/local');
 const jwtAuth = require('../strategies/jwt');
 
 router.use(express.json());
@@ -16,13 +16,18 @@ function createAuthToken(user) {
 }
 
 router.post('/login', customerLocalAuth, (req, res) => {
-  const customerAuthToken = createAuthToken(req.user);
-  res.json({ ...req.user, customerAuthToken });
+  const authToken = createAuthToken(req.user);
+  res.json({ ...req.user, authToken });
+});
+
+router.post('/gurulogin', guruLocalAuth, (req, res) => {
+  const authToken = createAuthToken(req.user);
+  res.json({ ...req.user, authToken });
 });
 
 router.post('/refresh', jwtAuth, (req, res) => {
-  const customerAuthToken = createAuthToken(req.user);
-  res.json({ ...req.user, customerAuthToken });
+  const authToken = createAuthToken(req.user);
+  res.json({ ...req.user, authToken });
 });
 
 module.exports = router;
