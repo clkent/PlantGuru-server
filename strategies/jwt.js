@@ -3,7 +3,7 @@
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = require('../config');
 
-function customerJwtAuth(req, res, next) {
+function jwtAuth(req, res, next) {
   const auth = req.header('Authorization');
 
   if (!auth) {
@@ -27,9 +27,9 @@ function customerJwtAuth(req, res, next) {
       return next(err);
     }
 
-    req.customer = payload.customer;
+    req.user = payload.user;
     return next();
   });
 }
 
-module.exports = customerJwtAuth;
+module.exports = jwtAuth;
