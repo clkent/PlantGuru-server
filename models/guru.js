@@ -23,22 +23,22 @@ class Guru extends Model {
     };
   }
 
-  //   //Model Relations
-  //   static get relationMappings() {
-  //     // Import models here to prevent require loops.
-  //     const Plant = require('./plant');
+  //Model Relations
+  static get relationMappings() {
+    // Import models here to prevent require loops.
+    const Customer = require('./customer');
 
-  //     return {
-  //       plants: {
-  //         relation: Model.HasManyRelation,
-  //         modelClass: Plant,
-  //         join: {
-  //           from: 'customers.id',
-  //           to: 'plants.customer_id'
-  //         }
-  //       }
-  //     };
-  //   }
+    return {
+      customers: {
+        relation: Model.HasManyRelation,
+        modelClass: Customer,
+        join: {
+          from: 'gurus.id',
+          to: 'customers.guru_id'
+        }
+      }
+    };
+  }
 }
 
 module.exports = Guru;
