@@ -2,6 +2,7 @@
 
 const express = require('express');
 const Customer = require('../models/customer');
+
 // const validateUser = require('./validation/user');
 
 const router = express.Router();
@@ -11,6 +12,7 @@ const router = express.Router();
 router.post('/', (req, res, next) => {
   const { password, email, name } = req.body;
 
+  console.log(req.body);
   Customer.query()
     .where({ email })
     .first()

@@ -9,12 +9,9 @@ exports.up = async function(knex, Promise) {
     t.string('sunlight').notNullable();
     t.string('mood').notNullable();
     t.json('weekly-watering-schedule').notNullable();
-    t.dateTime('createdAt').nullable();
-    t.dateTime('updatedAt').nullable();
-    t.dateTime('deletedAt').nullable();
+    t.dateTime('created_at').nullable();
+    t.dateTime('updated_at').nullable();
   });
 };
 
-exports.down = async function(knex, Promise) {
-  await knex.schema.dropTable('plants');
-};
+exports.down = function(knex, Promise) {};

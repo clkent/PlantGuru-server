@@ -5,14 +5,15 @@ exports.up = function(knex, Promise) {
     t.increments('id')
       .unsigned()
       .primary();
-    t.dateTime('createdAt').notNull();
-    t.dateTime('updatedAt').nullable();
-    t.dateTime('deletedAt').nullable();
+    t.dateTime('created_at').notNull();
+    t.dateTime('updated_at').nullable();
+    t.dateTime('deleted_at').nullable();
     t.string('name').notNull();
     t.string('email').notNull();
     t.string('password').notNull();
     t.jsonb('plants').nullable();
-    t.integer('guruId').nullable();
+    t.integer('guru_id').nullable();
+    t.boolean('subscribed').notNull();
   });
 };
 

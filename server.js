@@ -5,7 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const pg = require('pg');
 const { dbConnect } = require('./db');
-
+const jwtAuth = require('./strategies/jwt');
 //Routers
 const customersRouter = require('./routes/customers');
 const gurusRouter = require('./routes/gurus');
@@ -20,6 +20,7 @@ const app = express();
 //Middleware
 app.use(morgan('dev'));
 app.use(express.json());
+app.use('/api/plants', jwtAuth);
 
 //Routers middleware
 app.use('/api/customers', customersRouter);

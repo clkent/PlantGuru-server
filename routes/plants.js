@@ -5,32 +5,59 @@ const config = require('../knexfile.js');
 const env = 'development';
 const knex = require('../knex');
 const Plants = require('../models/plant');
+const {
+  requiredFieldsInBody,
+  idValidator
+} = require('../utilities/validators');
 
-router.post('/', async (req, res, next) => {
-  try {
-    let test = await Plants.query().insert({
-      name: 'Conifer Livingroom',
-      age: '2 months',
-      type: 'Conifer',
-      sunlight: 'direct sunlight',
-      mood: 'happy',
-      'weekly-watering-schedule': JSON.stringify({
-        Monday: true,
-        Tuesday: false,
-        Wednesday: false,
-        Thursday: false,
-        Friday: false,
-        Saturday: false,
-        Sunday: false
-      }),
-      created_at: `${new Date().toUTCString()}`,
-      updated_at: `${new Date().toUTCString()}`,
-      customer_id: 7
+router.get('/', (req, res, next) => {});
+
+router.get('/:id', idValidator, (req, res, next) => {
+  let id = req.user.id;
+  Plants.query()
+    .where('customer_id', id)
+    .then(res => {
+      res.json(res);
+    })
+    .catch(err => {
+      next(err);
     });
-    console.log(test);
-  } catch (err) {
-    console.log(err);
-  }
 });
+
+router.post(
+  '/',
+  idValidator,
+  requiredFieldsInBody([
+    'name',
+    'age',
+    'type',
+    'sunlight',
+    'mood',
+    'wws',
+    'zoo'
+  ]),
+  (req, res, next) => {
+    let { name, age, type, sunlight, mood, wws } = req.body;
+    let created_at = new Date().toUTCString();
+    let updated_at = new Date().toUTCString();
+    console.log(req.user);
+    let id = req.user.id;
+
+    Plants.query()
+      .insert({
+        name,
+        age,
+        type,
+        sunlight,
+        mood,
+        'weekly-watering-schedule': JSON.stringify(wws),
+        created_at,
+        updated_at,
+        customer_id: id
+      })
+      .then(res => res.json(res))
+      .catch(err => next(err));
+  }
+);
 
 module.exports = router;
