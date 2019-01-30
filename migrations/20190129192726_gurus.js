@@ -1,5 +1,3 @@
-'use strict';
-
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('gurus', function(t) {
     t.increments('id')
@@ -11,9 +9,8 @@ exports.up = function(knex, Promise) {
     t.string('email').notNull();
     t.string('password').notNull();
     t.jsonb('customers').nullable();
+    t.jsonb('plant_specialty').nullable();
   });
 };
 
-exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('gurus');
-};
+exports.down = function(knex, Promise) {};
