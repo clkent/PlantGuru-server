@@ -10,7 +10,8 @@ const jwtAuth = require('./strategies/jwt');
 const customersRouter = require('./routes/customers');
 const gurusRouter = require('./routes/gurus');
 const loginRouter = require('./routes/auth');
-const plantsRouter = require('./routes/plants');
+const customersPlantsRouter = require('./routes/customers_plants');
+const plantsRouter = require('./routes/db_plants');
 
 //Config Vars
 const { DB_URI, PORT, CLIENT_ORIGIN } = require('./config');
@@ -26,7 +27,8 @@ app.use('/api/plants', jwtAuth);
 app.use('/api/customers', customersRouter);
 app.use('/api/gurus', gurusRouter);
 app.use('/auth', loginRouter);
-app.use('/api/plants', plantsRouter);
+app.use('/api/customers_plants', customersPlantsRouter);
+app.use('/api/db_plants', plantsRouter);
 
 app.get('/', (req, res, next) => {
   console.log('Here, line 16');

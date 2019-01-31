@@ -26,19 +26,19 @@ class Customer extends Model {
   //Model Relations
   static get relationMappings() {
     // Import models here to prevent require loops.
-    const Plant = require('./plant');
+    const CustomerPlant = require('./customer_plant');
     const Guru = require('./guru');
 
     return {
-      plants: {
+      customers_plants: {
         relation: Model.HasManyRelation,
-        modelClass: Plant,
+        modelClass: CustomerPlant,
         join: {
           from: 'customers.id',
-          to: 'plants.customer_id'
+          to: 'customers_plants.customer_fk'
         }
       },
-      guru: {
+      gurus: {
         relation: Model.BelongsToOneRelation,
         modelClass: Guru,
         join: {

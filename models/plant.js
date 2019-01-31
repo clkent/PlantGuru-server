@@ -7,18 +7,25 @@ class Plant extends Model {
     return 'plants';
   }
 
+  serialize() {
+    return {
+      id: this.id,
+      type: this.type
+    };
+  }
+
   //Model Relations
   static get relationMappings() {
     // Import models here to prevent require loops.
-    const Customer = require('./customer');
+    const CustomerPlant = require('./customer_plant');
 
     return {
-      customer: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Customer,
+      customers_plants: {
+        relation: Model.HasManyRelation,
+        modelClass: CustomerPlant,
         join: {
-          from: 'plants.customer_id',
-          to: 'customers.id'
+          from: 'plants.id',
+          to: 'customers_plants.plant_fk'
         }
       }
     };
