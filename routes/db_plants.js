@@ -20,7 +20,7 @@ router.post('/', (req, res, next) => {
       created_at,
       updated_at
     })
-    .then(res => res.status(201).json({ message: 'Plant was inserted' }))
+    .then(response => res.status(201).json({ message: 'Plant was inserted' }))
     .catch(err => next(err));
 });
 

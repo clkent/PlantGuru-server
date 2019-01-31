@@ -4,7 +4,7 @@ const { Model } = require('objection');
 
 class CustomerPlant extends Model {
   static get tableName() {
-    return 'plants';
+    return 'customers_plants';
   }
 
   //Model Relations
