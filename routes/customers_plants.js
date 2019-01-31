@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const router = express.Router();
 const { DB_URI } = require('../config');
@@ -5,18 +7,25 @@ const config = require('../knexfile.js');
 const env = 'development';
 const knex = require('../knex');
 const CustomerPlant = require('../models/customer_plant');
+const jwtAuth = require('../strategies/jwt');
 const {
   requiredFieldsInBody,
   idValidator
 } = require('../utilities/validators');
 
+//protecting endpoints
+router.use('/', jwtAuth);
+
+//TODO: get endpoint
 router.get('/', (req, res, next) => {});
 
+//FIXME: fix join for type plant_fk
+//GET by id
 router.get('/:id', (req, res, next) => {
   let { id } = req.params;
   CustomerPlant.query()
-    .where(id)
-    .eager(['customer', 'plants'])
+    .where({ id })
+    .eager(['customers', 'plants'])
     .then(res => {
       console.log(res);
     })
@@ -25,6 +34,7 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
+//POST new plant
 router.post(
   '/',
   idValidator,
@@ -34,35 +44,35 @@ router.post(
     'sunlight',
     'mood',
     'weekly_watering_schedule',
-    'zoo'
+    'plant_fk'
   ]),
   (req, res, next) => {
     let {
       name,
       age,
-      type,
       sunlight,
       mood,
-      weekly_watering_schedule
+      weekly_watering_schedule,
+      plant_fk
     } = req.body;
     let created_at = new Date().toUTCString();
     let updated_at = new Date().toUTCString();
-    console.log(req.user);
-    let id = req.user.id;
+
+    let customer_fk = req.user.id;
 
     CustomerPlant.query()
       .insert({
         name,
         age,
-        type,
         sunlight,
         mood,
         weekly_watering_schedule,
+        plant_fk,
+        customer_fk,
         created_at,
-        updated_at,
-        customer_id: id
+        updated_at
       })
-      .then(res => res.json(res))
+      .then(response => res.json(response))
       .catch(err => next(err));
   }
 );

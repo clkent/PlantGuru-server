@@ -7,6 +7,13 @@ class Plant extends Model {
     return 'plants';
   }
 
+  serialize() {
+    return {
+      id: this.id,
+      type: this.type
+    };
+  }
+
   //Model Relations
   static get relationMappings() {
     // Import models here to prevent require loops.

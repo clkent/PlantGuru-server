@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const router = express.Router();
 
@@ -20,7 +22,7 @@ router.post('/', (req, res, next) => {
       created_at,
       updated_at
     })
-    .then(response => res.status(201).json({ message: 'Plant was inserted' }))
+    .then(response => res.status(201).json(response.serialize()))
     .catch(err => next(err));
 });
 

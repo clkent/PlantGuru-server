@@ -12,7 +12,6 @@ const router = express.Router();
 router.post('/', (req, res, next) => {
   const { password, email, name } = req.body;
 
-  console.log(req.body);
   Customer.query()
     .where({ email })
     .first()
