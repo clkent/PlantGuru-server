@@ -45,6 +45,7 @@ router.get('/:id', (req, res, next) => {
 
   return Customer.query()
     .where({ id: customerId })
+    .eager('customers_plants', 'gurus')
     .then(results => {
       if (!results.length) return Promise.reject();
       const item = results[0];

@@ -25,9 +25,9 @@ router.get('/:id', (req, res, next) => {
   let { id } = req.params;
   CustomerPlant.query()
     .where({ id })
-    .eager(['customers', 'plants'])
-    .then(res => {
-      console.log(res);
+    .eager('plants')
+    .then(response => {
+      res.json(response);
     })
     .catch(err => {
       next(err);
